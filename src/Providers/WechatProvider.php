@@ -15,22 +15,13 @@ class WechatProvider extends ServiceProvider
 
     private function check()
     {
-        if (class_exists('\EasyWeChat\Foundation\Application')) {
-            if ($this->get('easywechat') instanceof \EasyWeChat\Foundation\Application) {
-                $this->wechat = $this->channel['easywechat'];
-            } else {
-                $this->wechat = new \EasyWeChat\Foundation\Application($this->get('wechat', []));
-            }
-            $this->sender = 'notice';
-        } elseif (class_exists('\EasyWeChat\Factory')) {
-            $this->easywechatVersion = 4;
-            if ($this->get('easywechat') instanceof \EasyWeChat\OfficialAccount\Application) {
-                $this->wechat = $this->channel['easywechat'];
-            } else {
-                $this->wechat = \EasyWeChat\Factory::officialAccount($this->get('wechat', []));
-            }
-            $this->sender = 'template_message';
+        if ($this->get('easywechat') instanceof \EasyWeChat\OfficialAccount\Application) {
+            $this->wechat = $this->channel['easywechat'];
+        } else {
+            $this->wechat = \EasyWeChat\Factory::officialAccount($this->get('wechat', []));
         }
+
+        $this->sender = 'template_message';
 
         if (!empty($this->channel['access_token'])) {
             $this->wechat->access_token->setToken($this->channel['access_token']);

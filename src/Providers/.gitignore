@@ -1,0 +1,13 @@
+.env
+./vendor/*
+.DS_Store
+.idea/*
+*.log
+script.php
+app/Exceptions/Handler.php
+.vscode
+storage
+.php-cs-fixer.cache
+resources/json/*
+resources/.DS_Store
+node_modules
